@@ -5,10 +5,13 @@
   "license": "AGPL-3.0+",
   "devDependencies": {
     "browserify": "^16.5.0",
+    "chai": "^4.2.0",
+    "jsdom": "^15.2.1",
+    "mocha": "^6.2.2",
     "wzrd": "^1.5.0"
   },
   "dependencies": {},
   "scripts": {
-    "start": "wzrd select.js"
+    "test": "mocha 'src/**/*.test.js'"
   }
 }
