@@ -1,0 +1,14 @@
+{
+  "name": "vanilla-toolkit",
+  "version": "0.0.0",
+  "author": "Gui Prá (super.driver.512@gmail.com)",
+  "license": "AGPL-3.0+",
+  "devDependencies": {
+    "browserify": "^16.5.0",
+    "wzrd": "^1.5.0"
+  },
+  "dependencies": {},
+  "scripts": {
+    "start": "wzrd select.js"
+  }
+}
