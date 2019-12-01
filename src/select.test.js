@@ -139,6 +139,23 @@ describe('vtkSelect', () => {
           assert.equal(optionsWrapper.className, 'foo bar');
         });
       });
+
+      describe('value prop', () => {
+        it('is an null by default', () => {
+          let select = vtkSelect({ document });
+          assert.strictEqual(select.model.value, null);
+        });
+
+        it('equals the plain value parameter', () => {
+          let select = vtkSelect({ document, value: 123 });
+          assert.deepEqual(select.model.value, 123);
+        });
+
+        it('equals the resolved value function parameter', () => {
+          let select = vtkSelect({ document, value: () => 123 });
+          assert.deepEqual(select.model.value, 123);
+        });
+      });
     });
   });
 });

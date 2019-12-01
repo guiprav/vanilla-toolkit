@@ -1,4 +1,5 @@
 let el = require('./createElementWithClasses');
+let resolve = require('./resolve');
 
 let vtkSelect = ({
   document,
@@ -23,6 +24,10 @@ let vtkSelect = ({
     selectedOptionsWrapper,
     input,
     optionsWrapper,
+
+    get value() {
+      return resolve(more.value) || null;
+    },
   };
 
   return root;
