@@ -2,6 +2,8 @@ let vtkSelect = require('./select');
 let { JSDOM } = require('jsdom');
 let { assert } = require('chai');
 
+let timeout = x => new Promise(r => setTimeout(r, x));
+
 let window;
 let document;
 
@@ -154,6 +156,60 @@ describe('vtkSelect', () => {
         it('equals the resolved value function parameter', () => {
           let select = vtkSelect({ document, value: () => 123 });
           assert.deepEqual(select.model.value, 123);
+        });
+      });
+
+      describe('isLoading prop', () => {
+        it('is false by default', async () => {
+          let select = vtkSelect({ document });
+
+          await timeout(0);
+          assert.strictEqual(select.model.isLoading, false);
+        });
+
+        it('is true while loading options asynchronously', async () => {
+          let select = vtkSelect({
+            document,
+            options: () => timeout(20),
+          });
+
+          assert.strictEqual(select.model.isLoading, true);
+
+          await timeout(20);
+          assert.strictEqual(select.model.isLoading, false);
+        });
+      });
+
+      describe('options prop', () => {
+        it('is an empty object by default', async () => {
+          let select = vtkSelect({ document });
+
+          await timeout(0);
+          assert.deepEqual(select.model.options, {});
+        });
+
+        it('is initialized to the plain options parameter (if supplied)', async () => {
+          let options = { a: 1, b: 2 };
+          let select = vtkSelect({ document, options });
+
+          await timeout(0);
+          assert.deepEqual(select.model.options, options);
+        });
+
+        it('is initialized to the resolved options function parameter (if supplied)', async () => {
+          let options = { a: 1, b: 2 };
+          let select = vtkSelect({ document, options: () => options });
+
+          await timeout(0);
+          assert.deepEqual(select.model.options, options);
+        });
+
+        it('is initialized to the resolved options async function parameter (if supplied)', async () => {
+          let options = { a: 1, b: 2 };
+          let select = vtkSelect({ document, options: async () => options });
+
+          await timeout(0);
+          assert.deepEqual(select.model.options, options);
         });
       });
     });

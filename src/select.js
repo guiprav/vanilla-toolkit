@@ -19,7 +19,7 @@ let vtkSelect = ({
   inputWrapper.append(selectedOptionsWrapper, input);
   root.append(inputWrapper, optionsWrapper);
 
-  root.model = {
+  let model = root.model = {
     inputWrapper,
     selectedOptionsWrapper,
     input,
@@ -28,7 +28,23 @@ let vtkSelect = ({
     get value() {
       return resolve(more.value) || null;
     },
+
+    async loadOptions() {
+      model.isLoading = true;
+
+      try {
+        model.options = (await resolve(more.options)) || {};
+      }
+      finally {
+        model.isLoading = false;
+      }
+    },
+
+    isLoading: false,
+    options: {},
   };
+
+  model.loadOptions();
 
   return root;
 };
